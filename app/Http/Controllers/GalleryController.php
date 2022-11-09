@@ -37,8 +37,9 @@ class GalleryController extends Controller
         $name= str_replace(' ', '-', $name);
         $date = $request->input('date');
         $picture_naam = $date . '_' . $name . '.' . $cover->extension();
+        $albumname = $date . '_' . $name;
 
-        $cover->move(public_path('media/gallery/'.$name), $picture_naam);
+        $cover->move(public_path('media/gallery/'.$albumname), $picture_naam);
         $albums = Album::create([
             'name' => $request->input('name'),
             'date' => $date,
@@ -71,13 +72,16 @@ class GalleryController extends Controller
     public function destroyAlbum ($id) {
         $album = Album::find($id);
         $pictures = Picture::where('album_id', $id)->get();
+        
+        $albumname = $album->date . '_' . $album->name;
         foreach ($pictures as $picture) {
-            File::delete(public_path('media/gallery/'.$album->name.'/'.$picture->picture));
+            File::delete(public_path('media/gallery/'.$albumname.'/'.$picture->picture));
             $picture->delete();
         }
         $album = Album::find($id);
-        File::delete(public_path('media/gallery/'.$album->name.'/'.$album->cover));
-        File::deleteDirectory(public_path('media/gallery/'.$album->name));
+        $albumname = $album->date . '_' . $album->name;
+        File::delete(public_path('media/gallery/'.$albumname.'/'.$album->cover));
+        File::deleteDirectory(public_path('media/gallery/'.$albumname));
         $album->delete();
         return redirect('/dashboard/gallery');
     }
@@ -96,7 +100,8 @@ class GalleryController extends Controller
             'fb' => $album->fb,
             'count' => $album_count_new,
         ]);
-        File::delete(public_path('media/gallery/'.$album->name.'/'.$picture->picture));
+        $albumname = $album->date . '_' . $album->name;
+        File::delete(public_path('media/gallery/'.$albumname.'/'.$picture->picture));
         $picture->delete();
         return redirect('/dashboard/gallery/'.$albumid);
     }
@@ -109,7 +114,12 @@ class GalleryController extends Controller
             'pictures' => 'required',
             'images.*' => 'mimes:jpeg,jpg,png'
         ]);
-        $albumname = $request->albumname;
+        $albumid = $request->albumid;
+        $name = $request->albumname;
+        $album = Album::where('id', $albumid)->first();
+
+        
+        $albumname = $album->date . '_' . $album->name;
         if($request->hasFile('pictures')){
             $allowedfileExtension=['jpg','png', 'jpeg'];
             $files = $request->file('pictures');
@@ -126,10 +136,10 @@ class GalleryController extends Controller
                         'album_id' => $id,
                         'picture' => $picture_naam,
                     ]);
-                    $albumOld = Album::where('name', $albumname)->first();
+                    $albumOld = Album::where('name', $name)->first();
                     $album_count = $albumOld->count;
                     $count = $album_count + 1;
-                    $album = Album::where('name', $albumname)->update([
+                    $album = Album::where('name', $name)->update([
                         'name' => $albumOld->name,
                         'date' => $albumOld->date,
                         'important' => $albumOld->important,
@@ -141,6 +151,31 @@ class GalleryController extends Controller
             }
         }
         return redirect('/dashboard/gallery/'.$id);
+    }
+    public function editmustsee($id)
+    {   
+        $album = Album::find($id);
+        $mustsee = $album->important;
+        if($mustsee) {
+            $event = Album::where('id', $id)->update([
+                'name' => $album->name,
+                'date' => $album->date,
+                'important' => false,
+                'cover' => $album->cover,
+                'fb' => $album->fb,
+                'count' => $album->count,
+            ]);
+        } else {
+            $event = Album::where('id', $id)->update([
+                'name' => $album->name,
+                'date' => $album->date,
+                'important' => true,
+                'cover' => $album->cover,
+                'fb' => $album->fb,
+                'count' => $album->count,
+            ]);
+        }
+        return redirect('/dashboard/gallery');
     }
 
 

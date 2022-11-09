@@ -18,7 +18,7 @@
             @foreach ($pictures as $picture)
             <div class="col-sm-12 col-md-4">
                 <a class="lightbox" href="{{ URL("media/gallery/".str_replace(' ','-',$album->name)."/".$picture->picture) }}">
-                    <img src="{{ URL("media/gallery/".str_replace(' ','-',$album->name)."/".$picture->picture) }}" alt="">
+                    <img src="{{ URL('media/gallery/'. $album->date . '_' . str_replace(' ', '-', $album->name).'/'.$picture->picture) }}" alt="">
                 </a>
             </div>
             @endforeach

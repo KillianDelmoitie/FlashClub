@@ -99,14 +99,14 @@ class EventController extends Controller
         return redirect('/dashboard/event');
         
     }
-    public function editcover($id)
+    public function editphoto($id)
     {   
         $event = Event::find($id);
         return view('loggedIn.edit.eventPhoto', [
             'event' => $event
         ]);
     }
-    public function updatecover(Request $request, $id)
+    public function updatephoto(Request $request, $id)
     {
         $request->validate([
             'picture' => 'required|mimes:jpg,png,jpeg|max:5048|dimensions:max_width=2000,max_height=1100'

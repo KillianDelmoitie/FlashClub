@@ -19,7 +19,7 @@
             @foreach ($albums->slice(0, 3) as $album)
             <div class="col-sm-12 col-md-4 album" data-content="{{ $album->name }}">
                     <a  class="lightbox" href="{{ route("gallery.album", $album->id) }}">
-                        <img class="my-0" data-aos="zoom-in"  src="{{ URL("media/gallery/".str_replace(' ', '-', $album->name)."/".$album->cover) }}" alt="{{ $album->name }}">
+                        <img class="my-0" data-aos="zoom-in"  src="{{ URL("media/gallery/". $album->date . '_' . str_replace(' ', '-', $album->name)."/".$album->cover) }}" alt="{{ $album->name }}">
                     </a>
             </div>
             @endforeach
@@ -33,7 +33,7 @@
             @if ($album->important) 
                 <div class="col-sm-12 col-md-4">
                     <a  class="lightbox" href="{{ route("gallery.album", $album->id) }}">
-                        <img data-aos="zoom-out" src="{{ URL("media/gallery/".str_replace(' ', '-', $album->name)."/".$album->cover) }}" alt="{{ $album->name }}">
+                        <img data-aos="zoom-out" src="{{ URL("media/gallery/". $album->date . '_' . str_replace(' ', '-', $album->name)."/".$album->cover) }}" alt="{{ $album->name }}">
                     </a>
                 </div>
             @endif
@@ -45,7 +45,7 @@
             @if (!$album->important) 
             <div class="col-sm-12 col-md-4">
                     <a  class="lightbox" href="{{ route("gallery.album", $album->id) }}">
-                        <img data-aos="zoom-in" src="{{ URL("media/gallery/".str_replace(' ', '-', $album->name)."/".$album->cover) }}" alt="{{ $album->name }}">
+                        <img data-aos="zoom-in" src="{{ URL("media/gallery/". $album->date . '_' . str_replace(' ', '-', $album->name)."/".$album->cover) }}" alt="{{ $album->name }}">
                     </a>
             </div>
             @endif

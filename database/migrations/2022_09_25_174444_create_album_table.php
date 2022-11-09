@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('albums', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedBigInteger('id')->primary();
             $table->string('name');
             $table->date('date');
             $table->boolean('important');

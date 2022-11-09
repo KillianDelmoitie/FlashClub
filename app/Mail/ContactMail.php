@@ -28,7 +28,7 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Flash: '. $this->data->subject)
+        return $this->subject('FlashClub: '. $this->data->subject)
                     ->view('emails.contact');
     }
 }

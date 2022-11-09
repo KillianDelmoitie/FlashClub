@@ -44,6 +44,12 @@
                                 <input type="hidden" name="albumid" value="{{ $album->id }}"/>
                                 <button type="submit" class="btn btn-primary text-white btn-sm">Ajouter photos</button>
                             </form>
+                            
+                            <form action="{{ route('editmustsee.album',$album->id) }}" method="post">
+                                @method('POST')
+                                @csrf
+                                <button type="submit" class="btn btn-success text-white btn-sm show_confirm" >MUST SEE</button>
+                            </form>
 {{-- 
                             <form action="{{ route('edit.album',$album->id) }}" method="post">
                                 @method('GET')

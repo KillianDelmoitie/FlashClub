@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
         <!-- LOGO -->
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="{{ route('index') }}">
         <img src="{{ asset('media/logo.png') }}" alt="Flash" width="210" height="80">
       </a>
 
