@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'management',
             'email' => 'admin@flashclub.be',
-            'password' => Hash::make('@!Flash123AdminManagement'),
+            'password' => Hash::make('password'),
         ]);
     }
 }
