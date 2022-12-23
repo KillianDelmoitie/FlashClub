@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '0921012a-fd62-418a-9733-3119bad37d72'
-  imageRepository: 'flashclublaravel'
+  imageRepository: 'flashclub'
   containerRegistry: 'flashclub.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
